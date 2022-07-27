@@ -1,0 +1,60 @@
+<html>
+  <head>
+  </head>
+  <body>
+    <header class="navbar pcoded-header navbar-expand-lg navbar-light d-lg-none">
+      <div class="m-header">
+        <a class="mobile-menu" id="mobile-collapse" href="#!"><span></span></a>
+        <a href="/" class="b-brand">
+          <div class="nav-item pcoded-menu-caption">
+            <!-- Your logo img here -->
+          </div>
+        </a>
+      </div>
+    </header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <div class="navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'homepage' %}">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Categories</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Categories
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                {% for category in categories %}
+                <li><a class="dropdown-item" href="{% url 'category_items' category.id %}">{{category.category_name}}</a></li>
+                {% if category != categories.last %}
+                  <li><hr class="dropdown-divider"></li>
+                {% endif %}
+                {% endfor %}
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled">Disabled</a>
+            </li>
+          </ul>
+          <form class="d-flex">
+            <input class="form-control me-2" name="searchbar" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-primary" type="submit">Search</button>
+          </form>
+          <form class="d-flex1">
+            {% if user.is_authenticated %}
+              <a class="bi bi-cart" href="{% url 'cart_list' %}"><svg xmlns="http://www.w3.org/2000/svg" width="45" height="30" fill="white" class="bi bi-cart" viewBox="0 0 16 16">
+                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+              </svg></a>
+              <a class="btn btn-outline-danger" href="{% url 'logout' %}">Logout</a>
+            {% else %}
+              <a class="btn btn-outline-primary" href="{% url 'login' %}">Login</a>
+            {% endif %}
+          </form>
+        </div>
+      </div>
+    </nav>
+  </body>
+</html>

@@ -1,0 +1,58 @@
+{% extends 'adminapp/main.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Categories</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+</head>
+<body>
+    {% block content %}
+    <table class="table table-striped table-dark">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Category Name</th>
+            <th scope="col" colspan="2"></th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for category in categories %}
+                <tr>
+                    <th scope="row">{{category.id}}</th>
+                    <td>{{category.category_name}}</td>
+                    <td><a class="btn btn-outline-primary" href="{% url 'category_update' category.id %}">Update</a></td>
+                    <td><a class="btn btn-outline-danger" href="{% url 'category_delete' category.id %}">Delete</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+      <!-- Implementation of page buttons -->
+      {% if categories.has_other_pages %}
+        <ul class="pagination">
+          {% if categories.has_previous %}
+            <li><a class="btn btn-outline-primary" href="?page={{ categories.previous_page_number }}">&laquo;</a></li>
+          {% else %}
+            <li class="btn btn-outline-primary disabled"><span>&laquo;</span></li>
+          {% endif %}
+          {% for i in categories.paginator.page_range %}
+            {% if categories.number == i %}
+              <li class="btn btn-outline-primary active"><span>{{ i }} <span class="btn btn-outline-primary sr-only">(current)</span></span></li>
+            {% else %}
+              <li><a class="btn btn-outline-primary" href="?page={{ i }}">{{ i }}</a></li>
+            {% endif %}
+          {% endfor %}
+          {% if categories.has_next %}
+            <li><a class="btn btn-outline-primary" href="?page={{ categories.next_page_number }}">&raquo;</a></li>
+          {% else %}
+            <li class="btn btn-outline-primary disabled"><span>&raquo;</span></li>
+          {% endif %}
+        </ul>
+      {% endif %}
+    {% endblock %}
+</body>
+</html>

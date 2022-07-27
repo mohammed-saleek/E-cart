@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <title>
+            Employee Registration
+        </title>
+    </head>
+    <body>
+        {% extends 'homeapp/main.html' %}
+        {% block content %}
+        {% load crispy_forms_tags %}  
+        <center><h3 class="display-4">Join us in this wonderful journey</h3></center>
+        <p><em>Please Fill in the form bitch</em></p>
+        <div class="container py-5">
+            <!-- Create a Form -->
+            <form action="{% url 'employee_register' %}" method="POST">
+                <!-- Security token by Django -->
+                {% csrf_token %}
+                {% for field in form %}
+                    <td>
+                    <table>
+                    <tr><td>{{ field.label }}</td></tr>
+                    <tr><td>{{ field }}</td></tr>
+                    </table>
+                    </td>
+                {% endfor %}
+                <button class="btn btn-primary" type="submit" value="Register">Register</button>
+            </form>
+            <p class="text-center">If you already have an account, <a href="{% url 'login' %}">Login</a> instead.</p>
+        </div>
+        {% endblock %}
+    </body>
+</html>

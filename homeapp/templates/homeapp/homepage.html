@@ -1,0 +1,52 @@
+{% extends 'homeapp/main.html' %}
+{% load static %}
+
+
+<html>
+    <head>
+        <title>
+            Homepage
+        </title>
+        <link rel="stylesheet" type="text/css" href="{% static 'homeapp/style.css' %}">
+    </head>
+    <body>
+
+        {% block content %}
+        <center><h3 class="display-4">All You ever want</h3></center>
+        <p><em>Products Available In The Store</em></p>
+        <div class="container">
+        <div class="row">
+            <!-- Refer to bootstrap card deck for future references -->
+            <!-- https://getbootstrap.com/docs/4.0/components/card/#card-decks -->
+            {% for product in products %}
+            <div class="card" style="width: 17rem;">
+                
+                <img class="card-img-top" src="{{product.imageURL}}" alt="Card image cap" height="230" width="200"></a>
+                <div class="card-body">
+                    <h5 class="card-title text-primary">{{product.product_name}}</h5>
+                    <p class="card-text text-secondary">Price : {{product.product_price}}</p>
+                    {% if user.is_authenticated %}
+                    <button data-product={{product.id}} data-action="add" class="btn btn-outline-secondary add-btn update-cart" href="{% url 'cart_list' %}" class="btn btn-dark">Add to cart</button>
+                    <br>
+                    <a href="{% url 'addcart' product.id %}" class="btn btn-dark">Move to wishlist</a>
+                    {% endif %}
+                </div>
+                <!-- Giving hyperlink to bootstrap card -->
+                
+            </div>
+            {% endfor %}
+            {% if products.count == 0 %}
+                <center>
+                    <h2><em>Product Unavailable</em></h2>
+                </center>
+            {% endif %}
+        </div>
+        <!-- Alert Popup message -->
+        {% if messages %}
+            {% for message in messages %}
+                {% if message.tags %}  <script>alert("{{ message }}")</script> {% endif %}
+            {% endfor %}
+        {% endif %}
+        {% endblock %}
+    </body>
+</html>

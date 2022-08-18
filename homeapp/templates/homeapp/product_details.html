@@ -1,0 +1,60 @@
+{% extends 'homeapp/main.html' %}
+{% load static %}
+{% block content %}
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="{% static 'homeapp/product_details.css' %}">
+    </head>
+<body>
+    <main class="container">
+    
+        <!-- Left Column / Headphones Image -->
+        <img src="{{product.imageURL}}" width="120px" height="120px" top="-145px" right="40px">
+
+        <!-- Right Column -->
+        <div class="right-column">
+    
+        <!-- Product Description -->
+        <div class="product-description">
+            <span>Headphones</span>
+            <h1>Beats EP</h1>
+            <p>The preferred choice of a vast range of acclaimed DJs. Punchy, bass-focused sound and high isolation. Sturdy headband and on-ear cushions suitable for live performance</p>
+        </div>
+    
+        <!-- Product Configuration -->
+        <div class="product-configuration">
+    
+            <!-- Cable Configuration -->
+            <div class="cable-config">
+            <span>Cable configuration</span>
+    
+            <div class="cable-choose">
+                <button>Straight</button>
+                <button>Coiled</button>
+                <button>Long-coiled</button>
+            </div>
+    
+            <a href="#">How to configurate your headphones</a>
+            </div>
+        </div>
+    
+        <!-- Product Pricing -->
+        <div class="product-price">
+            <span>{{product.product_price}}</span>
+            <a href="{% url 'addcart' product.id %}" class="cart-btn">Add to cart</a>
+        </div>
+        </div>
+    </main>
+    <script>
+        $(document).ready(function() {
+            $('.color-choose input').on('click', function() {
+                var headphonesColor = $(this).attr('data-image');
+
+                $('.active').removeClass('active');
+                $('.left-column img[data-image = ' + headphonesColor + ']').addClass('active');
+                $(this).addClass('active');
+            });});
+    </script>
+</body>
+</html>
+{% endblock %}

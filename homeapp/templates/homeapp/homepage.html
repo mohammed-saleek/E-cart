@@ -20,7 +20,7 @@
             <!-- https://getbootstrap.com/docs/4.0/components/card/#card-decks -->
             {% for product in products %}
             <div class="card" style="width: 17rem;">
-                
+                <a href = "{% url 'product_view' product.id %}">
                 <img class="card-img-top" src="{{product.imageURL}}" alt="Card image cap" height="230" width="200"></a>
                 <div class="card-body">
                     <h5 class="card-title text-primary">{{product.product_name}}</h5>

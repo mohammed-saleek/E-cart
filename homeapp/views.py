@@ -36,3 +36,8 @@ def category_items(request,pk):
     categories = Category.objects.all()
     context = {'products':products,'categories':categories}
     return render(request,'homeapp/homepage.html',context)
+
+def product_view(request,pk):
+    product  = Product.objects.get(id = pk)
+    context = {'product':product}
+    return render(request,'homeapp/product_details.html',context)

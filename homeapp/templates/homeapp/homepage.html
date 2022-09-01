@@ -26,9 +26,9 @@
                     <h5 class="card-title text-primary">{{product.product_name}}</h5>
                     <p class="card-text text-secondary">Price : {{product.product_price}}</p>
                     {% if user.is_authenticated %}
-                    <button data-product={{product.id}} data-action="add" class="btn btn-outline-secondary add-btn update-cart" href="{% url 'cart_list' %}" class="btn btn-dark">Add to cart</button>
+                    <a href="{% url 'wishlisted' product.id %}" class="btn btn-dark">Move to wishlist</a>
                     <br>
-                    <a href="{% url 'addcart' product.id %}" class="btn btn-dark">Move to wishlist</a>
+                    <a href="{% url 'addcart' product.id %}" class="btn btn-dark">Add To Cart</a>
                     {% endif %}
                 </div>
                 <!-- Giving hyperlink to bootstrap card -->

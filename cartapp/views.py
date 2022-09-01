@@ -3,6 +3,7 @@ from .models import *
 from productapp.models import *
 #from django.http import JsonResponse
 from django.db.models import Q
+from django.contrib import messages
 #signed_in_user = User.objects.filter(customer= request.user.customer)
 # Create your views here.
 def cart(request):
@@ -123,3 +124,20 @@ def create_checkout(request):
         except Order.DoesNotExist:
             order_obj = None
     return redirect('homepage')
+
+def wishlist_items(request,pk):
+    if request.user.is_authenticated:
+        product = Product.objects.get(id=pk)
+        try:
+            Wishlist_items = WishlistItem.objects.get(Q(customer = request.user)&Q(product = product))
+        except WishlistItem.DoesNotExist:
+            Wishlist_items = None
+        if Wishlist_items:
+            return('homepage')
+        else:
+            wishlist_obj = WishlistItem(customer = request.user,product = product)
+            wishlist_obj.save()
+            print(f"Product {product} Wishlisted")
+            messages.info(request, f"You've wishlisted the product -  {product}")
+    return redirect('homepage')
+
